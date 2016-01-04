@@ -1,0 +1,48 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<h2>Texts overview</h2>
+<br>
+<div class="col-sm-2">
+    <div class="btn-group-vertical">
+        <a href="{{ url_for('form') }}" class="btn btn-info"> Add new text</a>
+        <a href="{{ url_for('form') }}" class="btn btn-info"> Admin</a>
+    </div>
+</div>
+<div class="col-sm-10">
+    {% for t in texts %}
+    <div class="panel panel-info">
+
+        <div class="panel-body">
+            <h4><a href="{{url_for('textview',id=t.id)}}">
+                {{ t.title }}
+            </a></h4>
+            <br>
+            <div class="pull-right">
+                <div class="btn-group-vertical">
+                    <a href="{{url_for('add_translation',id=t.id) }}" class="btn btn-info btn-sm" role="button">Add
+                        translation</a>
+                    <a href="{{url_for('all_translations',id=t.id) }}" class="btn btn-info btn-sm" role="button">See all
+                        translations</a>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                {% if t.translations %}
+                <div class="list-group">
+                    {% for tr in t.translations %}
+                    <a href="{{url_for('sidebyside',id=tr.id)}}" class="list-group-item">{{tr.title}}</a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="bg-info">No translations attached.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<p><h2>{{title}}</h2></p>
+
+<div class="panel-group">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Original</th>
+            <th>Translation</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sentence in orig_lines %}
+        <tr>
+            <td>{{ sentence.body }}</td>
+            <td>{{ trans_lines[loop.index0].body }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

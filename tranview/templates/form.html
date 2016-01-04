@@ -1,0 +1,29 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="alert alert-info">
+    <p class="bg-info">
+        Nothing to see here <i>(yet)</i>
+    </p>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Text content input</div>
+    <div class="panel-body">
+        <form action="" method="post" name="form">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                <label for="title">Title:</label>
+                {{ form.title(class_="form-control") }}
+            </div>
+            <div class="form-group">
+                <label for="content">Content:</label>
+                {{ form.content(class_="form-control", rows=6) }}
+            </div>
+
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

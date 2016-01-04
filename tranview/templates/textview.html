@@ -1,0 +1,29 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<p><h2>{{title}}</h2></p>
+
+<div class="panel-group">
+
+
+    {% for sentence in text.lines %}
+    <div class="panel panel-info">
+
+        <div class="panel-body">
+            {{ sentence.body }}
+            <div class="pull-right">
+                <a href="{{url_for('merge',id=sentence.id) }}">
+                    <button type="button" class="btn btn-default btn-sm">
+
+                        <span class="glyphicon glyphicon-upload"></span>
+
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

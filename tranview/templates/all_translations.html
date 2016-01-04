@@ -1,0 +1,30 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+<p><h2>{{title}}</h2></p>
+
+<div class="panel-group">
+    {% for sentence in text.lines %}
+    <span class="selection">{{sentence.body}}</span>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+    $(function(){
+    $('.selection').click(function(){
+        $('.selection').css('background-color', 'transparent');
+       $(this).css('background-color', 'yellow');
+    });
+});
+
+
+
+
+</script>
+{% endblock %}
