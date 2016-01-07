@@ -56,6 +56,38 @@ class MyTestCase(unittest.TestCase):
         res = ContentText.query.filter_by(title="original").first()
         self.assertEqual(len(res.translations), 2)
 
+    def test_compreh(self):
+        orig = "Ala ma kota. Ola ma psa. Pies Oli to Azor."
+        t1 = "Ala has a cat. Ola has a dog. Ola's dog is Azor."
+        t2 = "Ala owns a cat. Ola owns a dog. Ola's dog's name is Azor."
+        ct = ContentText(title="original", content=orig)
+        t1ct = ContentText(title="trans1", content=t1, original=ct)
+        t2ct = ContentText(title="trans2", content=t2, original=ct)
+        l = [tran.lines[1].body for tran in ct.translations]
+        self.assertEqual(len(l), 2)
+
+    def test_delete(self):
+        # check relationship between original and translations(s)
+        orig = "Ala ma kota. Ola ma psa. Pies Oli to Azor."
+        t1 = "Ala has a cat. Ola has a dog. Ola's dog is Azor."
+        t2 = "Ala owns a cat. Ola owns a dog. Ola's dog's name is Azor."
+        ct = ContentText(title="original", content=orig)
+        t1ct = ContentText(title="trans1", content=t1, original=ct)
+        t2ct = ContentText(title="trans2", content=t2, original=ct)
+        db.session.add(ct)
+        db.session.commit()
+        res = ContentText.query.filter_by(title="original").first()
+        lines = Line.query.all()
+        assert (len(lines), 9)
+        assert (len(res.translations) == 2)
+        t1 = res.translations[0]
+        db.session.delete(t1)
+        db.session.commit()
+        assert (len(res.translations) == 1)
+        lines = Line.query.all()
+        assert (len(lines), 6)
+
+
 
 if __name__ == '__main__':
     unittest.main()

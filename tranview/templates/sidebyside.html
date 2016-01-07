@@ -9,6 +9,7 @@
     <table class="table table-hover">
         <thead>
         <tr>
+            <th></th>
             <th>Original</th>
             <th>Translation</th>
         </tr>
@@ -16,6 +17,7 @@
         <tbody>
         {% for sentence in orig_lines %}
         <tr>
+            <td>{{loop.index}}</td>
             <td>{{ sentence.body }}</td>
             <td>{{ trans_lines[loop.index0].body }}</td>
         </tr>

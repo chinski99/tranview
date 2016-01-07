@@ -25,6 +25,8 @@
                 <div class="btn-group-vertical">
                     <a href="{{url_for('add_translation',id=t.id) }}" class="btn btn-info btn-sm" role="button">Add
                         translation</a>
+                    <a href="{{url_for('delete_original',id=t.id) }}" class="btn btn-info btn-sm" role="button">Delete
+                        original</a>
                     <a href="{{url_for('all_translations',id=t.id) }}" class="btn btn-info btn-sm" role="button">See all
                         translations</a>
                 </div>

@@ -9,9 +9,16 @@
 
 <div class="panel-group">
     {% for sentence in text.lines %}
-    <span class="selection">{{sentence.body}}</span>
+    <span class="selection" id="line{{loop.index0}}">{{sentence.body}}</span>
     {% endfor %}
 </div>
+<div class="panel-group">
+    <img id="loading" style="display: none" src="/static/img/loading.gif">
+    <p><strong>
+        <ul class="list-group"><span id="translation_place"></span></ul>
+    </strong></p>
+</div>
+
 {% endblock %}
 
 {% block script %}
@@ -20,9 +27,33 @@
     $('.selection').click(function(){
         $('.selection').css('background-color', 'transparent');
        $(this).css('background-color', 'yellow');
+       translate($(this).attr('id'), '#translation_place', '#loading');
     });
 });
 
+function translate(sourceId, destId, loadingId) {
+    var m, myid;
+    m = /line(\d+)/.exec(sourceId);
+    if (m) {
+        myid = m[1];
+    }
+    $(destId).hide();
+    $(loadingId).show();
+    $.post('/point_sentence',{id:myid}
+    ).done(function(json) {
+        var html = '';
+        $.each(json.items,function(index, item) {
+            html+='<li class="list-group-item">'+item+'</li>';
+        });
+        $(destId).html(html);
+        $(loadingId).hide();
+        $(destId).show();
+    }).fail(function() {
+        $(destId).text("Error: Could not contact server.");
+        $(loadingId).hide();
+        $(destId).show();
+    });
+}
 
 
 
